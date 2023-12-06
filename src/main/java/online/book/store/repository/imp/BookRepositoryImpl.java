@@ -1,6 +1,7 @@
 package online.book.store.repository.imp;
 
 import java.util.List;
+import java.util.Optional;
 import online.book.store.model.Book;
 import online.book.store.repository.BookRepository;
 import org.hibernate.Session;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 public class BookRepositoryImpl implements BookRepository {
     private static final String CANT_SAVE_MSG = "Can't save book: ";
     private static final String CANT_GET_ALL_MSG = "Can't get all books!";
+    private static final String CANT_FIND_BY_ID_MSG = "Can't find book with id: ";
     private static final String SELECT_ALL_QUERY = "SELECT b FROM Book b";
     private final SessionFactory sessionFactory;
 
@@ -41,6 +43,16 @@ public class BookRepositoryImpl implements BookRepository {
             }
         }
         return book;
+    }
+
+    @Override
+    public Optional<Book> findBookById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            Book book = session.get(Book.class, id);
+            return Optional.ofNullable(book);
+        } catch (Exception e) {
+            throw new RuntimeException(CANT_FIND_BY_ID_MSG + id, e);
+        }
     }
 
     @Override

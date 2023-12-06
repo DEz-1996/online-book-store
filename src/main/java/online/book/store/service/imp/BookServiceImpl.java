@@ -1,6 +1,11 @@
 package online.book.store.service.imp;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import online.book.store.dto.BookDto;
+import online.book.store.dto.CreateBookRequestDto;
+import online.book.store.exception.EntityNotFoundException;
+import online.book.store.mapper.BookMapper;
 import online.book.store.model.Book;
 import online.book.store.repository.BookRepository;
 import online.book.store.service.BookService;
@@ -9,20 +14,34 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BookServiceImpl implements BookService {
+    private static final String CANT_FIND_BY_ID_MSG = "Can't find book by id: ";
     private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper) {
         this.bookRepository = bookRepository;
+        this.bookMapper = bookMapper;
     }
 
     @Override
-    public Book save(Book book) {
-        return bookRepository.save(book);
+    public BookDto save(CreateBookRequestDto bookDto) {
+        Book book = bookMapper.toBook(bookDto);
+        Book savedBook = bookRepository.save(book);
+        return bookMapper.toDto(savedBook);
     }
 
     @Override
-    public List<Book> findAll() {
-        return bookRepository.findAll();
+    public BookDto getBook(Long id) {
+        Book book = bookRepository.findBookById(id).orElseThrow(
+                () -> new EntityNotFoundException(CANT_FIND_BY_ID_MSG + id));
+        return bookMapper.toDto(book);
+    }
+
+    @Override
+    public List<BookDto> findAll() {
+        return bookRepository.findAll().stream()
+                .map(bookMapper::toDto)
+                .collect(Collectors.toList());
     }
 }
