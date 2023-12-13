@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/books")
+@RequestMapping("/books")
 @RequiredArgsConstructor
 public class BookController {
 
     private final BookService bookService;
 
-    @GetMapping()
+    @GetMapping
     public List<BookDto> getAll() {
         return bookService.findAll();
     }
@@ -33,7 +33,7 @@ public class BookController {
         return bookService.getBook(id);
     }
 
-    @PostMapping()
+    @PostMapping
     public BookDto createBook(@RequestBody CreateBookRequestDto bookDto) {
         return bookService.save(bookDto);
     }
