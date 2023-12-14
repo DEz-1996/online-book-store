@@ -36,7 +36,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookMapper.toBook(bookDto);
         book.setId(id);
         boolean isIdPresent = bookRepository.findById(id).isPresent();
-        if(!isIdPresent) {
+        if (!isIdPresent) {
             throw new EntityNotFoundException(CANT_FIND_BY_ID_MSG + id);
         }
         Book updatedBook = bookRepository.save(book);
