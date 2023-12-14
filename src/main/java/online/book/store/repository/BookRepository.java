@@ -1,13 +1,9 @@
 package online.book.store.repository;
 
-import java.util.List;
-import java.util.Optional;
 import online.book.store.model.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface BookRepository {
-    Book save(Book book);
-
-    Optional<Book> findBookById(Long id);
-
-    List<Book> findAll();
+@Repository
+public interface BookRepository extends JpaRepository<Book, Long> {
 }
