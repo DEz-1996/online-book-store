@@ -1,6 +1,7 @@
 package online.book.store.service.imp;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import online.book.store.dto.BookDto;
 import online.book.store.dto.CreateBookRequestDto;
@@ -35,6 +36,10 @@ public class BookServiceImpl implements BookService {
     public BookDto update(CreateBookRequestDto bookDto, Long id) {
         Book book = bookMapper.toBook(bookDto);
         book.setId(id);
+        boolean isIdPresent = bookRepository.findById(id).isPresent();
+        if(!isIdPresent) {
+            throw new EntityNotFoundException(CANT_FIND_BY_ID_MSG + id);
+        }
         Book updatedBook = bookRepository.save(book);
         return bookMapper.toDto(updatedBook);
     }
