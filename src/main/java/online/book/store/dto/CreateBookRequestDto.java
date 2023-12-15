@@ -11,14 +11,20 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateBookRequestDto {
+    private static final int MIN_STRING_LENGTH = 5;
+    private static final int MAX_STRING_LENGTH = 255;
+    private static final String STRING_SIZE_MSG = "length must be between 5 and 255 chars";
+    private static final String ISBN_SIZE_MSG = "length must be 10 or 13 chars";
+
     @NotNull
-    @Size(min = 5, max = 255)
+    @Size(min = MIN_STRING_LENGTH, max = MAX_STRING_LENGTH, message = STRING_SIZE_MSG)
     private String author;
     @NotNull
-    @Size(min = 5, max = 255)
+    @Size(min = MIN_STRING_LENGTH, max = MAX_STRING_LENGTH, message = STRING_SIZE_MSG)
     private String title;
+
     @NotNull
-    @Pattern(regexp = "\\d{10}|\\d{13}", message = "must be 10 or 13")
+    @Pattern(regexp = "\\d{10}|\\d{13}", message = ISBN_SIZE_MSG)
     private String isbn;
     @NotNull
     @Positive
