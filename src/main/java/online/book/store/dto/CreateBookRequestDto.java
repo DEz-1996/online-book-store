@@ -1,15 +1,33 @@
 package online.book.store.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateBookRequestDto {
-    private String title;
+    private static final int MIN_STRING_LENGTH = 5;
+    private static final int MAX_STRING_LENGTH = 255;
+    private static final String STRING_SIZE_MSG = "length must be between 5 and 255 chars";
+    private static final String ISBN_SIZE_MSG = "length must be 10 or 13 chars";
+
+    @NotNull
+    @Size(min = MIN_STRING_LENGTH, max = MAX_STRING_LENGTH, message = STRING_SIZE_MSG)
     private String author;
+    @NotNull
+    @Size(min = MIN_STRING_LENGTH, max = MAX_STRING_LENGTH, message = STRING_SIZE_MSG)
+    private String title;
+
+    @NotNull
+    @Pattern(regexp = "\\d{10}|\\d{13}", message = ISBN_SIZE_MSG)
     private String isbn;
+    @NotNull
+    @Positive
     private BigDecimal price;
     private String description;
     private String coverImage;
