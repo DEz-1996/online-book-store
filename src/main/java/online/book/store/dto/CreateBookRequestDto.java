@@ -2,11 +2,11 @@ package online.book.store.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import lombok.Data;
+import org.hibernate.validator.constraints.ISBN;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -24,7 +24,7 @@ public class CreateBookRequestDto {
     private String title;
 
     @NotNull
-    @Pattern(regexp = "\\d{10}|\\d{13}", message = ISBN_SIZE_MSG)
+    @ISBN(message = ISBN_SIZE_MSG)
     private String isbn;
     @NotNull
     @Positive
