@@ -24,7 +24,11 @@ public class BookServiceImpl implements BookService {
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper, BookSpecificationBuilder bookSpecificationBuilder) {
+    public BookServiceImpl(
+            BookRepository bookRepository,
+            BookMapper bookMapper,
+            BookSpecificationBuilder bookSpecificationBuilder
+    ) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
         this.bookSpecificationBuilder = bookSpecificationBuilder;
