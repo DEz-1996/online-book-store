@@ -3,13 +3,16 @@ package online.book.store.service.imp;
 import java.util.List;
 import java.util.stream.Collectors;
 import online.book.store.dto.BookDto;
+import online.book.store.dto.BookSearchParametersDto;
 import online.book.store.dto.CreateBookRequestDto;
 import online.book.store.exception.EntityNotFoundException;
 import online.book.store.mapper.BookMapper;
 import online.book.store.model.Book;
-import online.book.store.repository.BookRepository;
+import online.book.store.repository.book.BookRepository;
+import online.book.store.repository.book.BookSpecificationBuilder;
 import online.book.store.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,10 +21,13 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
+    private final BookSpecificationBuilder bookSpecificationBuilder;
+
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper) {
+    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper, BookSpecificationBuilder bookSpecificationBuilder) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
+        this.bookSpecificationBuilder = bookSpecificationBuilder;
     }
 
     @Override
@@ -60,5 +66,13 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public List<BookDto> search(BookSearchParametersDto searchParameters) {
+        Specification<Book> build = bookSpecificationBuilder.build(searchParameters);
+        return bookRepository.findAll(build).stream()
+                .map(bookMapper::toDto)
+                .toList();
     }
 }
