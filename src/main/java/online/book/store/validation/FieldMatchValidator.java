@@ -4,7 +4,9 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import online.book.store.dto.UserRegistrationRequestDto;
 
-public class FieldMatchValidator implements ConstraintValidator<FieldMatch, UserRegistrationRequestDto> {
+public class FieldMatchValidator implements
+        ConstraintValidator<FieldMatch,
+        UserRegistrationRequestDto> {
 
     @Override
     public boolean isValid(

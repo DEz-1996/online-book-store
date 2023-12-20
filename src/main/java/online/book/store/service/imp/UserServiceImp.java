@@ -3,7 +3,7 @@ package online.book.store.service.imp;
 import lombok.RequiredArgsConstructor;
 import online.book.store.dto.UserRegistrationRequestDto;
 import online.book.store.dto.UserResponseDto;
-import online.book.store.exception.RegistrationException;
+import online.book.store.exception.exceptions.RegistrationException;
 import online.book.store.mapper.UserMapper;
 import online.book.store.model.User;
 import online.book.store.repository.UserRepository;
