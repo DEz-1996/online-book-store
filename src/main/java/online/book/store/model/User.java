@@ -17,7 +17,6 @@ import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -26,9 +25,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted=false")
 public class User implements UserDetails {
-    private static final String ROLE_ADMIN = "ROLE_ADMIN";
-    private static final String ROLE_USER = "ROLE_USER";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,7 +40,7 @@ public class User implements UserDetails {
     private String shippingAddress;
     @Column(nullable = false)
     private boolean isDeleted = false;
-    @ManyToMany(fetch = FetchType.EAGER)//TODO:EAGER is ok?
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -53,7 +49,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .map(Role::getAuthority)
                 .collect(Collectors.toSet());
     }
 

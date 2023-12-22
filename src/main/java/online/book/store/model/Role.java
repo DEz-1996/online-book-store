@@ -9,6 +9,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Entity
 @Data
@@ -20,6 +22,10 @@ public class Role {
     @Column(nullable = false, unique = true, columnDefinition = "varchar")
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private RoleName name;
+
+    public GrantedAuthority getAuthority() {
+        return new SimpleGrantedAuthority(name.name());
+    }
 
     public enum RoleName {
         ROLE_USER,
