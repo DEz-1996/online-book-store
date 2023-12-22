@@ -2,6 +2,7 @@ package online.book.store.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import java.util.Objects;
 import online.book.store.dto.UserRegistrationRequestDto;
 
 public class FieldMatchValidator implements
@@ -13,6 +14,6 @@ public class FieldMatchValidator implements
             UserRegistrationRequestDto requestDto,
             ConstraintValidatorContext constraintValidatorContext
     ) {
-        return requestDto.getPassword().equals(requestDto.getRepeatPassword());
+        return Objects.equals(requestDto.getPassword(), requestDto.getRepeatPassword());
     }
 }
