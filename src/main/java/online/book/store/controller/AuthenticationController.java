@@ -26,7 +26,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     @Operation(summary = "Login exist user", description = "Login exist user")
-    public UserLoginResponceDto login(@RequestBody UserLoginRequestDto requestDto) {
+    public UserLoginResponceDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
         return authenticationService.authenticate(requestDto);
     }
 
