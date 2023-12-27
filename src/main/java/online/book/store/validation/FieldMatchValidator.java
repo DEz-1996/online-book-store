@@ -6,7 +6,7 @@ import java.util.Objects;
 import online.book.store.dto.UserRegistrationRequestDto;
 
 public class FieldMatchValidator implements
-        ConstraintValidator<FieldMatch,
+        ConstraintValidator<PasswordsFieldsMatch,
         UserRegistrationRequestDto> {
 
     @Override

@@ -1,6 +1,7 @@
 package online.book.store.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -16,13 +17,12 @@ public class CreateBookRequestDto {
     private static final String STRING_SIZE_MSG = "length must be between 5 and 255 chars";
     private static final String ISBN_SIZE_MSG = "length must be 10 or 13 chars";
 
-    @NotNull
+    @NotBlank
     @Size(min = MIN_STRING_LENGTH, max = MAX_STRING_LENGTH, message = STRING_SIZE_MSG)
     private String author;
-    @NotNull
+    @NotBlank
     @Size(min = MIN_STRING_LENGTH, max = MAX_STRING_LENGTH, message = STRING_SIZE_MSG)
     private String title;
-
     @NotNull
     @ISBN(message = ISBN_SIZE_MSG)
     private String isbn;

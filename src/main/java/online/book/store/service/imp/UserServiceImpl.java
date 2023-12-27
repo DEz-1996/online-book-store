@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImp implements UserService {
+public class UserServiceImpl implements UserService {
     private static final String REGISTRATION_ERROR_MSG = "Can't register user";
     private final UserRepository userRepository;
     private final UserMapper userMapper;
