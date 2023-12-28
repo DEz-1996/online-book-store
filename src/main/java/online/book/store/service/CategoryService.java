@@ -1,10 +1,9 @@
 package online.book.store.service;
 
-import online.book.store.dto.CategoryDto;
-import online.book.store.dto.CreateCategoryRequestDto;
-import org.springframework.data.domain.Pageable;
-
 import java.util.List;
+import online.book.store.dto.category.CategoryDto;
+import online.book.store.dto.category.CreateCategoryRequestDto;
+import org.springframework.data.domain.Pageable;
 
 public interface CategoryService {
     List<CategoryDto> findAll(Pageable pageable);

@@ -2,7 +2,7 @@ package online.book.store.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import online.book.store.dto.UserRegistrationRequestDto;
+import online.book.store.dto.user.UserRegistrationRequestDto;
 
 public class FieldMatchValidator implements
         ConstraintValidator<FieldMatch,

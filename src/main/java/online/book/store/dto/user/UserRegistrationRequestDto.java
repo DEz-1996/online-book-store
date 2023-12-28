@@ -1,4 +1,4 @@
-package online.book.store.dto;
+package online.book.store.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

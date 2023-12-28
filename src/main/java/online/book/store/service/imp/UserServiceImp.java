@@ -2,8 +2,8 @@ package online.book.store.service.imp;
 
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import online.book.store.dto.UserRegistrationRequestDto;
-import online.book.store.dto.UserResponseDto;
+import online.book.store.dto.user.UserRegistrationRequestDto;
+import online.book.store.dto.user.UserResponseDto;
 import online.book.store.exception.exceptions.RegistrationException;
 import online.book.store.mapper.UserMapper;
 import online.book.store.model.Role;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImp implements UserService {
     private static final String REGISTRATION_ERROR_MSG = "Can't register user";
     private final UserRepository userRepository;
-    private final RoleRepository repository;
+    private final RoleRepository repository;//TODO:change name
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 

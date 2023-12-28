@@ -1,4 +1,4 @@
-package online.book.store.dto;
+package online.book.store.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -10,7 +10,6 @@ public record UserLoginRequestDto(
         @Size(min = 8, max = 20)
         String email,
         @NotEmpty
-        @Email
         @Size(min = 8, max = 20)
         String password
 ) {

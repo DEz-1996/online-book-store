@@ -1,8 +1,8 @@
 package online.book.store.security;
 
 import lombok.RequiredArgsConstructor;
-import online.book.store.dto.UserLoginRequestDto;
-import online.book.store.dto.UserLoginResponceDto;
+import online.book.store.dto.user.UserLoginRequestDto;
+import online.book.store.dto.user.UserLoginResponceDto;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

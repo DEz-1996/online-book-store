@@ -1,4 +1,4 @@
-package online.book.store.dto;
+package online.book.store.dto.category;
 
 import lombok.Data;
 
