@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.ISBN;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateBookRequestDto {
+
     private static final int MIN_STRING_LENGTH = 5;
     private static final int MAX_STRING_LENGTH = 255;
     private static final String STRING_SIZE_MSG = "length must be between 5 and 255 chars";
@@ -19,6 +20,7 @@ public class CreateBookRequestDto {
 
     @NotBlank
     @Size(min = MIN_STRING_LENGTH, max = MAX_STRING_LENGTH, message = STRING_SIZE_MSG)
+    private String title;
     private String author;
     @NotBlank
     @Size(min = MIN_STRING_LENGTH, max = MAX_STRING_LENGTH, message = STRING_SIZE_MSG)

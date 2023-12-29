@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import online.book.store.dto.BookDto;
+import online.book.store.dto.BookSearchParametersDto;
 import online.book.store.dto.CreateBookRequestDto;
 import online.book.store.service.BookService;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +39,11 @@ public class BookController {
     @Operation(summary = "Get book by ID", description = "Get the existing book by ID")
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.getBook(id);
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+        return bookService.search(searchParameters);
     }
 
     @PostMapping
