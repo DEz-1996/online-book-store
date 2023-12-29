@@ -13,6 +13,7 @@ import online.book.store.repository.book.BookSpecificationBuilder;
 import online.book.store.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +21,6 @@ public class BookServiceImpl implements BookService {
     private static final String CANT_FIND_BY_ID_MSG = "Can't find book by id: ";
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
-
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Autowired
@@ -61,8 +61,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> findAll() {
-        return bookRepository.findAll().stream()
+    public List<BookDto> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable).stream()
                 .map(bookMapper::toDto)
                 .collect(Collectors.toList());
     }
