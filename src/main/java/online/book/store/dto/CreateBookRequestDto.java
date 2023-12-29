@@ -22,9 +22,6 @@ public class CreateBookRequestDto {
     @Size(min = MIN_STRING_LENGTH, max = MAX_STRING_LENGTH, message = STRING_SIZE_MSG)
     private String title;
     private String author;
-    @NotBlank
-    @Size(min = MIN_STRING_LENGTH, max = MAX_STRING_LENGTH, message = STRING_SIZE_MSG)
-    private String title;
     @NotNull
     @ISBN(message = ISBN_SIZE_MSG)
     private String isbn;
