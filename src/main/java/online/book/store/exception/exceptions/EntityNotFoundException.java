@@ -1,4 +1,4 @@
-package online.book.store.exception;
+package online.book.store.exception.exceptions;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {

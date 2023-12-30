@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import online.book.store.exception.exceptions.EntityNotFoundException;
+import online.book.store.exception.exceptions.RegistrationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -37,8 +39,17 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return createResponseEntity(ex, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RegistrationException.class)
+    public ResponseEntity<Object> handleRegistrationException(RegistrationException ex) {
+        return createResponseEntity(ex, HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<Object> createResponseEntity(Exception ex, HttpStatus status) {
         Map<String, Object> body = Map.of("error", ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(body, status);
     }
 
     private String getErrorMessage(ObjectError e) {

@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import online.book.store.dto.BookDto;
 import online.book.store.dto.BookSearchParametersDto;
 import online.book.store.dto.CreateBookRequestDto;
-import online.book.store.exception.EntityNotFoundException;
+import online.book.store.exception.exceptions.EntityNotFoundException;
 import online.book.store.mapper.BookMapper;
 import online.book.store.model.Book;
 import online.book.store.repository.book.BookRepository;
