@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import online.book.store.dto.BookDto;
+import online.book.store.dto.BookSearchParametersDto;
 import online.book.store.dto.CreateBookRequestDto;
 import online.book.store.service.BookService;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +43,11 @@ public class BookController {
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.getBook(id);
     }
+
+    @GetMapping("/search")
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+        return bookService.search(searchParameters);
+    }//TODO:make consist
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping

@@ -38,7 +38,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> handleRegistrationException(EntityNotFoundException ex) {
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
         return createResponseEntity(ex, HttpStatus.NOT_FOUND);
     }
 
