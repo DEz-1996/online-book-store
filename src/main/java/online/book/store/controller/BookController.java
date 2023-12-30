@@ -46,7 +46,10 @@ public class BookController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/search")
-    @Operation(summary = "Find books by parameters", description = "Search books by parameters: title, author, ISBN")
+    @Operation(
+            summary = "Find books by parameters",
+            description = "Search books by parameters: title, author, ISBN"
+    )
     public List<BookResponseDto> searchBooks(BookSearchParametersDto searchParameters) {
         return bookService.search(searchParameters);
     }
@@ -61,7 +64,10 @@ public class BookController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update book", description = "Update data about the existing book by ID")
-    public BookResponseDto update(@RequestBody @Valid CreateBookRequestDto bookDto, @PathVariable Long id) {
+    public BookResponseDto update(
+            @RequestBody @Valid CreateBookRequestDto bookDto,
+            @PathVariable Long id
+    ) {
         return bookService.update(bookDto, id);
     }
 
