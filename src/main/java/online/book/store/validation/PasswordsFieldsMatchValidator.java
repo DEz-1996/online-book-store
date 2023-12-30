@@ -5,7 +5,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.util.Objects;
 import online.book.store.dto.UserRegistrationRequestDto;
 
-public class FieldMatchValidator implements
+public class PasswordsFieldsMatchValidator implements
         ConstraintValidator<PasswordsFieldsMatch,
         UserRegistrationRequestDto> {
 
