@@ -47,7 +47,7 @@ public class BookController {
     @GetMapping("/search")
     public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
         return bookService.search(searchParameters);
-    }//TODO:make consist
+    } //TODO:make consist
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
