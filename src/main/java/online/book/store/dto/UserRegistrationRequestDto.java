@@ -3,11 +3,11 @@ package online.book.store.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import online.book.store.validation.FieldMatch;
+import online.book.store.validation.PasswordsFieldsMatch;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-@FieldMatch
+@PasswordsFieldsMatch
 public class UserRegistrationRequestDto {
     private static final int MIN_PASS_SIZE = 8;
     private static final int MAX_PASS_SIZE = 20;
