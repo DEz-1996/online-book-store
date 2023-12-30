@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-admin
+      author: DEz
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: admin@admin.admin
+              - column:
+                  name: password
+                  value: $2a$10$gsoBhDrXnlZh9yjSftiht.5StHggDe7TR5a3rYkQyxzYJ1kzHHE/W
+              - column:
+                  name: first_name
+                  value: admin_first_name
+              - column:
+                  name: last_name
+                  value: admin_last_name
+              - column:
+                  name: shipping_address
+                  value: admin_shipping_address
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email='admin@admin.admin')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE name='ROLE_ADMIN')
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email='admin@admin.admin')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE name='ROLE_USER')
