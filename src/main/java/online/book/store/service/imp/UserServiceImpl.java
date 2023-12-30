@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private static final String REGISTRATION_ERROR_MSG = "Can't register user";
     private final UserRepository userRepository;
-    private final RoleRepository repository;
+    private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.toUser(registrationRequestDto);
         user.setPassword(passwordEncoder.encode(registrationRequestDto.getPassword()));
-        Role role = repository.findByName(Role.RoleName.ROLE_USER);
+        Role role = roleRepository.findByName(Role.RoleName.ROLE_USER);
         user.setRoles(Set.of(role));
         return userMapper.toDto(userRepository.save(user));
     }

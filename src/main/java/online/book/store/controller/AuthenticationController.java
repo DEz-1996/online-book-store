@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import online.book.store.dto.UserLoginRequestDto;
-import online.book.store.dto.UserLoginResponceDto;
+import online.book.store.dto.UserLoginResponseDto;
 import online.book.store.dto.UserRegistrationRequestDto;
 import online.book.store.dto.UserResponseDto;
 import online.book.store.exception.exceptions.RegistrationException;
@@ -26,7 +26,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     @Operation(summary = "Login exist user", description = "Login exist user")
-    public UserLoginResponceDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
         return authenticationService.authenticate(requestDto);
     }
 

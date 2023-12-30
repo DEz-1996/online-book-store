@@ -2,7 +2,7 @@ package online.book.store.security;
 
 import lombok.RequiredArgsConstructor;
 import online.book.store.dto.UserLoginRequestDto;
-import online.book.store.dto.UserLoginResponceDto;
+import online.book.store.dto.UserLoginResponseDto;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,10 +14,10 @@ public class AuthenticationService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
-    public UserLoginResponceDto authenticate(UserLoginRequestDto requestDto) {
+    public UserLoginResponseDto authenticate(UserLoginRequestDto requestDto) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(requestDto.email(), requestDto.password()));
         String token = jwtUtil.generateToken(authentication.getName());
-        return new UserLoginResponceDto(token);
+        return new UserLoginResponseDto(token);
     }
 }

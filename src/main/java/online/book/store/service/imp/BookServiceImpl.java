@@ -2,7 +2,7 @@ package online.book.store.service.imp;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import online.book.store.dto.BookDto;
+import online.book.store.dto.BookResponseDto;
 import online.book.store.dto.BookSearchParametersDto;
 import online.book.store.dto.CreateBookRequestDto;
 import online.book.store.exception.exceptions.EntityNotFoundException;
@@ -35,14 +35,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto save(CreateBookRequestDto bookDto) {
+    public BookResponseDto save(CreateBookRequestDto bookDto) {
         Book book = bookMapper.toBook(bookDto);
         Book savedBook = bookRepository.save(book);
         return bookMapper.toDto(savedBook);
     }
 
     @Override
-    public BookDto update(CreateBookRequestDto bookDto, Long id) {
+    public BookResponseDto update(CreateBookRequestDto bookDto, Long id) {
         Book book = bookMapper.toBook(bookDto);
         book.setId(id);
         boolean isIdPresent = bookRepository.findById(id).isPresent();
@@ -54,14 +54,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getBook(Long id) {
+    public BookResponseDto getBook(Long id) {
         Book book = bookRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(CANT_FIND_BY_ID_MSG + id));
         return bookMapper.toDto(book);
     }
 
     @Override
-    public List<BookDto> findAll(Pageable pageable) {
+    public List<BookResponseDto> findAll(Pageable pageable) {
         return bookRepository.findAll(pageable).stream()
                 .map(bookMapper::toDto)
                 .collect(Collectors.toList());
@@ -73,7 +73,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> search(BookSearchParametersDto searchParameters) {
+    public List<BookResponseDto> search(BookSearchParametersDto searchParameters) {
         Specification<Book> build = bookSpecificationBuilder.build(searchParameters);
         return bookRepository.findAll(build).stream()
                 .map(bookMapper::toDto)
