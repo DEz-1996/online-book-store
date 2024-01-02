@@ -2,6 +2,7 @@ package online.book.store.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import online.book.store.dto.CartItemAddBookRequestDto;
 import online.book.store.dto.CartItemQuantityRequestDto;
@@ -42,7 +43,7 @@ public class ShoppingCartController {
     @PostMapping
     @Operation(summary = "Add book to shopping cart", description = "Add book to shopping cart")
     public ShoppingCartResponseDto addBookToShoppingCart(
-            @RequestBody CartItemAddBookRequestDto requestDto,
+            @RequestBody @Valid CartItemAddBookRequestDto requestDto,
             Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return shoppingCartService.addBookToShoppingCart(requestDto, user.getId());
@@ -53,8 +54,8 @@ public class ShoppingCartController {
     @Operation(summary = "Update quantity of a book in the shopping cart",
             description = "Update quantity of a book in the shopping cart")
     public ShoppingCartResponseDto updateItemsQuantity(
-                                       @RequestBody CartItemQuantityRequestDto quantityRequestDto,
-                                       @PathVariable Long cartItemId) {
+            @RequestBody @Valid CartItemQuantityRequestDto quantityRequestDto,
+            @PathVariable Long cartItemId) {
         return shoppingCartService.updateItemsQuantity(cartItemId, quantityRequestDto);
     }
 

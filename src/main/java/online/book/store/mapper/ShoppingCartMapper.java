@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(config = MapperConfig.class, uses = CartItemMapper.class)
 public interface ShoppingCartMapper {
-
     @Mapping(target = "userId", source = "user.id")
     ShoppingCartResponseDto toResponseDto(ShoppingCart shoppingCart);
 }
