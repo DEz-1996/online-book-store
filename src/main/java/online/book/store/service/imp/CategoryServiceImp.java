@@ -45,7 +45,7 @@ public class CategoryServiceImp implements CategoryService {
     public CategoryDto update(CreateCategoryRequestDto categoryRequestDto, Long id) {
         Category category = categoryMapper.toEntity(categoryRequestDto);
         category.setId(id);
-        boolean isIdPresent = categoryRepository.findById(id).isPresent();
+        boolean isIdPresent = categoryRepository.existsById(id);
         if (!isIdPresent) {
             throw new EntityNotFoundException(CANT_FIND_BY_ID_MSG + id);
         }
