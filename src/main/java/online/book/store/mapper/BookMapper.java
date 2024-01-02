@@ -2,7 +2,6 @@ package online.book.store.mapper;
 
 import java.util.stream.Collectors;
 import online.book.store.config.MapperConfig;
-import online.book.store.dto.BookDtoWithoutCategoryIds;
 import online.book.store.dto.BookResponseDto;
 import online.book.store.dto.CreateBookRequestDto;
 import online.book.store.model.Book;

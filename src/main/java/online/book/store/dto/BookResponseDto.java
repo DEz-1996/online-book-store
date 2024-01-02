@@ -2,7 +2,6 @@ package online.book.store.dto;
 
 import java.math.BigDecimal;
 import java.util.Set;
-
 import lombok.Data;
 
 @Data
