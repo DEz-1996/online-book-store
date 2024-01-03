@@ -34,7 +34,7 @@ public class ShoppingCartController {
     @Operation(
             summary = "Retrieve user's shopping cart",
             description = "Get info and books from cart")
-    public ShoppingCartResponseDto getCartContent(Authentication authentication) {
+    public ShoppingCartResponseDto getShoppingCart(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return shoppingCartService.getUserCartContent(user.getId());
     }
