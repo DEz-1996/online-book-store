@@ -24,6 +24,7 @@ import online.book.store.repository.order.OrderItemRepository;
 import online.book.store.repository.order.OrderRepository;
 import online.book.store.service.OrderService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final OrderItemMapper orderItemMapper;
 
+    @Transactional
     @Override
     public OrderResponseDto createOrder(OrderCreateRequestDto createRequestDto, User user) {
         Long userId = user.getId();
