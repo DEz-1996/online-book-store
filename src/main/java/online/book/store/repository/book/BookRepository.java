@@ -3,6 +3,7 @@ package online.book.store.repository.book;
 import java.util.List;
 import java.util.Optional;
 import online.book.store.model.Book;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -13,4 +14,7 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
 
     @Query("SELECT b FROM Book b JOIN FETCH b.categories WHERE b.id = :id")
     Optional<Book> findById(Long id);
+
+    @Query("SELECT b FROM Book b LEFT JOIN b.categories")
+    List<Book> getAll(Pageable pageable);
 }
