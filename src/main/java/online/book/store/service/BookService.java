@@ -18,4 +18,6 @@ public interface BookService {
     void deleteById(Long id);
 
     List<BookResponseDto> search(BookSearchParametersDto searchParameters);
+
+    List<BookResponseDto> findAllByCategoryId(Long id);
 }
