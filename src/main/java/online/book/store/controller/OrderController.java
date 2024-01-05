@@ -11,6 +11,7 @@ import online.book.store.dto.order.OrderResponseDto;
 import online.book.store.dto.order.OrderStatusRequestDto;
 import online.book.store.model.User;
 import online.book.store.service.OrderService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +50,7 @@ public class OrderController {
     public OrderResponseDto setOrderStatus(
             @RequestBody @Valid OrderStatusRequestDto statusRequestDto,
             @PathVariable(name = "id") Long orderId) {
-        return orderService.setStatus(statusRequestDto, orderId);
+        return orderService.updateStatus(statusRequestDto, orderId);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER')")
@@ -57,9 +58,9 @@ public class OrderController {
     @Operation(
             summary = "Retrieve user orders history",
             description = "Get info about all user orders")
-    public Set<OrderResponseDto> getAllOrders(Authentication authentication) {
+    public Set<OrderResponseDto> getAllOrders(Authentication authentication, Pageable pageable) {
         User user = (User) authentication.getPrincipal();
-        return orderService.getAll(user.getId());
+        return orderService.getAll(user.getId(), pageable);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER')")
@@ -78,7 +79,9 @@ public class OrderController {
     @Operation(
             summary = "Retrieve all user order items",
             description = "Get info about all user order items by order id")
-    public Set<OrderItemResponseDto> getAllOrderItems(@PathVariable Long orderId) {
-        return orderService.getAllOrderItems(orderId);
+    public Set<OrderItemResponseDto> getAllOrderItems(
+            @PathVariable Long orderId,
+            Pageable pageable) {
+        return orderService.getAllOrderItems(orderId, pageable);
     }
 }

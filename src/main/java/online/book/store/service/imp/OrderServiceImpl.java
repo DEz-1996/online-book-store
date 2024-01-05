@@ -23,6 +23,7 @@ import online.book.store.repository.ShoppingCartRepository;
 import online.book.store.repository.order.OrderItemRepository;
 import online.book.store.repository.order.OrderRepository;
 import online.book.store.service.OrderService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,38 +45,46 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public OrderResponseDto createOrder(OrderCreateRequestDto createRequestDto, User user) {
-        Long userId = user.getId();
+        Order order = new Order();
+        order.setShippingAddress(createRequestDto.getShippingAddress());
+        order.setUser(user);
+        Set<CartItem> cartItems = findCartItems(user.getId());
+        order.setTotal(calculateTotal(cartItems));
+        orderRepository.save(order);
+        Set<OrderItem> orderItems = createOrderItems(order, cartItems);
+        order.setOrderItems(orderItems);
+        cartItemRepository.deleteAll(cartItems);
+        return orderMapper.toDto(order);
+    }
+
+    private Set<CartItem> findCartItems(Long userId) {
         ShoppingCart shoppingCart = shoppingCartRepository
                 .findByUserId(userId)
                 .orElseThrow(
                         () -> new EntityNotFoundException(
                                 CANT_FIND_SHOPPING_CART_BY_ID_MSG + userId));
-        Set<CartItem> cartItems = shoppingCart.getCartItems();
+        return shoppingCart.getCartItems();
+    }
 
-        BigDecimal total = cartItems.stream()
+    private BigDecimal calculateTotal(Set<CartItem> cartItems) {
+        return cartItems.stream()
                 .map(cartItem -> cartItem.getBook().getPrice().multiply(
                         BigDecimal.valueOf(cartItem.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
-        Order order = new Order();
-        order.setShippingAddress(createRequestDto.getShippingAddress());
-        order.setUser(user);
-        order.setTotal(total);
-        orderRepository.save(order);
-
+    private Set<OrderItem> createOrderItems(Order order, Set<CartItem> cartItems) {
         List<OrderItem> orderItems = cartItems.stream()
                 .map(orderItemMapper::cartItemToOrderItemWithoutOrder)
                 .peek(orderItem -> orderItem.setOrder(order))
                 .collect(Collectors.toList());
         orderItemRepository.saveAll(orderItems);
-        order.setOrderItems(new HashSet<>(orderItems));
-
-        cartItemRepository.deleteAll(cartItems);
-        return orderMapper.toDto(order);
+        return new HashSet<>(orderItems);
     }
 
     @Override
-    public OrderResponseDto setStatus(OrderStatusRequestDto statusRequestDto, Long orderId) {
+    @Transactional
+    public OrderResponseDto updateStatus(OrderStatusRequestDto statusRequestDto, Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         CANT_FIND_ORDER_BY_ID_MSG + orderId));
@@ -85,11 +94,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Set<OrderResponseDto> getAll(Long userId) {
-        Set<Order> orders = orderRepository.findAllByUserId(userId);
-        return orders.stream()
-                .map(orderMapper::toDto)
-                .collect(Collectors.toSet());
+    public Set<OrderResponseDto> getAll(Long userId, Pageable pageable) {
+        List<Order> orders = orderRepository.findAllByUserId(userId, pageable);
+        return new HashSet<>(orderMapper.toDtoList(orders));
     }
 
     @Override
@@ -102,10 +109,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Set<OrderItemResponseDto> getAllOrderItems(Long orderId) {
-        List<OrderItem> orderItems = orderItemRepository.findAllByOrderId(orderId);
-        return orderItems.stream()
-                .map(orderItemMapper::toDto)
-                .collect(Collectors.toSet());
+    public Set<OrderItemResponseDto> getAllOrderItems(Long orderId, Pageable pageable) {
+        List<OrderItem> orderItems = orderItemRepository.findAllByOrderId(orderId, pageable);
+        return new HashSet<>(orderItemMapper.toDtoList(orderItems));
     }
 }

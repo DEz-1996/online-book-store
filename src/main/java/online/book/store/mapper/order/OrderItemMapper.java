@@ -1,9 +1,11 @@
 package online.book.store.mapper.order;
 
+import java.util.List;
 import online.book.store.config.MapperConfig;
 import online.book.store.dto.order.OrderItemResponseDto;
 import online.book.store.model.CartItem;
 import online.book.store.model.OrderItem;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -15,4 +17,7 @@ public interface OrderItemMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "order", ignore = true)
     OrderItem cartItemToOrderItemWithoutOrder(CartItem cartItem);
+
+    @IterableMapping(elementTargetType = OrderItemResponseDto.class)
+    List<OrderItemResponseDto> toDtoList(List<OrderItem> orderItems);
 }
