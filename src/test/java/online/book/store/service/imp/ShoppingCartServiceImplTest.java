@@ -67,7 +67,8 @@ class ShoppingCartServiceImplTest {
     @DisplayName("Get user cart content")
     void getUserCartContent_ValidUserId_GetValidShoppingCartResponseDto() {
         Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        Mockito.when(shoppingCartRepository.findByUserId(userId)).thenReturn(Optional.of(shoppingCart));
+        Mockito.when(shoppingCartRepository.findByUserId(userId))
+                .thenReturn(Optional.of(shoppingCart));
         Mockito.when(shoppingCartMapper.toResponseDto(shoppingCart))
                 .thenReturn(shoppingCartResponseDto);
 
