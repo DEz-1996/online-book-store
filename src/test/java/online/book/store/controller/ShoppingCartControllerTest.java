@@ -83,12 +83,12 @@ class ShoppingCartControllerTest {
     @Sql(scripts = {
             "classpath:database/books/insert-books.sql",
             "classpath:database/users/insert-users.sql",
-            "classpath:database/shopping_carts/insert-shopping-carts.sql",
-            "classpath:database/cart_items/insert-cart-items.sql",
+            "classpath:database/shopping/cart/insert-shopping-carts.sql",
+            "classpath:database/shopping/cart/items/insert-cart-items.sql",
     }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
-            "classpath:database/cart_items/delete-all-cart-items.sql",
-            "classpath:database/shopping_carts/delete-all-shopping-carts.sql",
+            "classpath:database/shopping/cart/items/delete-all-cart-items.sql",
+            "classpath:database/shopping/cart/delete-all-shopping-carts.sql",
             "classpath:database/users/delete-added-user.sql",
             "classpath:database/books/delete-all-books.sql"
     },

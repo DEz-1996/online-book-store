@@ -16,14 +16,14 @@ import org.springframework.test.context.jdbc.Sql;
 class ShoppingCartRepositoryTest {
     private static User user;
     private static ShoppingCart shoppingCart;
-    private static final String CANT_FIND_BOOK_BY_ID_MSG = "Can't find book by id: ";
+    private static Long userId = 2L;
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
     @BeforeAll
     static void beforeAll() {
         user = new User()
-                .setId(2L)
+                .setId(userId)
                 .setEmail("test1@mail.com")
                 .setPassword("$2a$10$gsoBhDrXnlZh9yjSftiht.5StHggDe7TR5a3rYkQyxzYJ1kzHHE/W")
                 .setFirstName("Test1 firstname")
@@ -39,15 +39,15 @@ class ShoppingCartRepositoryTest {
     @DisplayName("Find shopping cart by user id")
     @Sql(scripts = {
             "classpath:database/users/insert-users.sql",
-            "classpath:database/shopping_carts/insert-shopping-carts.sql"
+            "classpath:database/shopping/cart/insert-shopping-carts.sql"
     }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
-            "classpath:database/shopping_carts/delete-all-shopping-carts.sql",
+            "classpath:database/shopping/cart/delete-all-shopping-carts.sql",
             "classpath:database/users/delete-added-user.sql"
     }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void findByUserId_ValidUserId_ReturnOptionalShoppingCart() {
         ShoppingCart expected = shoppingCart;
-        ShoppingCart actual = shoppingCartRepository.findByUserId(2L).get();
+        ShoppingCart actual = shoppingCartRepository.findByUserId(userId).get();
         Assertions.assertEquals(expected, actual);
     }
 }

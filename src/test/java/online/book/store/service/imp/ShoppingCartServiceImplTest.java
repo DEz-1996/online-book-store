@@ -28,6 +28,7 @@ class ShoppingCartServiceImplTest {
     private static CartItemResponseDto cartItemResponseDto;
     private static ShoppingCart shoppingCart;
     private static ShoppingCartResponseDto shoppingCartResponseDto;
+    private static Long userId = 1L;
 
     @InjectMocks
     private ShoppingCartServiceImpl shoppingCartService;
@@ -41,7 +42,7 @@ class ShoppingCartServiceImplTest {
     @BeforeAll
     static void beforeAll() {
         user = new User()
-                .setId(1L);
+                .setId(userId);
         book = new Book()
                 .setId(1L)
                 .setTitle("Test title")
@@ -49,7 +50,7 @@ class ShoppingCartServiceImplTest {
                 .setIsbn("012345678901")
                 .setPrice(BigDecimal.valueOf(199.99));
         shoppingCart = new ShoppingCart()
-                .setId(1L)
+                .setId(userId)
                 .setUser(user);
         cartItemResponseDto = new CartItemResponseDto()
                 .setId(1L)
@@ -65,11 +66,12 @@ class ShoppingCartServiceImplTest {
     @Test
     @DisplayName("Get user cart content")
     void getUserCartContent_ValidUserId_GetValidShoppingCartResponseDto() {
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        Mockito.when(shoppingCartRepository.findByUserId(1L)).thenReturn(Optional.of(shoppingCart));
+        Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        Mockito.when(shoppingCartRepository.findByUserId(userId)).thenReturn(Optional.of(shoppingCart));
         Mockito.when(shoppingCartMapper.toResponseDto(shoppingCart))
                 .thenReturn(shoppingCartResponseDto);
-        ShoppingCartResponseDto actual = shoppingCartService.getUserCartContent(1L);
+
+        ShoppingCartResponseDto actual = shoppingCartService.getUserCartContent(userId);
         ShoppingCartResponseDto expected = shoppingCartResponseDto;
         EqualsBuilder.reflectionEquals(expected, actual);
     }
