@@ -9,7 +9,20 @@ The application was crafted to streamline the operations of the online bookstore
 1. Shopping Cart: Our Online Book Store enables users to incorporate books into their shopping carts. You can effortlessly peruse our extensive collection of books, pick your favorites, and include them in your cart. The cart operates seamlessly, empowering users to view, modify, and finalize their purchases before proceeding to checkout.
 2. Order Management: Once you've populated your shopping cart with the books you crave, our application furnishes a streamlined order management system. You can scrutinize your orders and include them.
 3. Book Management with Pagination and Sorting: We recognize the significance of effective book exploration. Our application presents a sophisticated search functionality that empowers users to discover all books by categories, author, title, or by id. With pagination support, you can navigate through an extensive catalog of books without inundating your search results.
-4. Security and JWT Tokens for User Auth: Security is paramount in our application. We've integrated Spring Security to safeguard your data and transactions. JWT (JSON Web Tokens) are employed for secure authentication and authorization, guaranteeing that only authorized users can access sensitive functionalities.## Technologies used
+4. Security and JWT Tokens for User Auth: Security is paramount in our application. We've integrated Spring Security to safeguard your data and transactions. JWT (JSON Web Tokens) are employed for secure authentication and authorization, guaranteeing that only authorized users can access sensitive functionalities.
+
+## Running with Docker Compose
+To set up Online Book Store, follow these simple steps:
+1. Clone the repository to your local machine from the console with the command: git clone https://github.com/DEz-1996/online-book-store.git.
+2. Ensure you have Java and Maven installed.
+3. Ensure that the docker-compose.yml file in the root of the project is configured appropriately. You can customize environment variables, ports, and other settings in this file.
+4. Execute the following commands in the project root directory:
+   ```bash
+   mvn package
+   docker-compose build
+   docker-compose up
+
+## Technologies used
 ### Core Technologies:
 - Java
 - Maven (Build tool)
